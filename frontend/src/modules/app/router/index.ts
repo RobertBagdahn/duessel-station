@@ -2,8 +2,8 @@ export default [
   {
     path: "/",
     name: "home",
-    redirect: { name: "TemperaturMain" },
-    component: () => import(/* webpackChunkName: "TemperaturMain" */ "@/modules/temperature/views/Main.vue")
+    redirect: { name: "SensorDataMain" },
+    component: () => import(/* webpackChunkName: "SensorDataMain" */ "@/modules/temperature/views/Main.vue")
   },
   {
     path: '/404',

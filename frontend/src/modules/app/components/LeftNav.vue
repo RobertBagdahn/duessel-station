@@ -74,7 +74,7 @@
               <div class="flex flex-shrink-0 items-center px-4">
                 <router-link
                   @click="onButtonClicked"
-                  :to="{ name: 'TemperaturMain' }"
+                  :to="{ name: 'SensorDataMain' }"
                 >
                   <img
                     class="h-12 w-auto"
@@ -187,7 +187,7 @@
       >
         <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
           <div class="flex flex-shrink-0 items-center px-4">
-            <router-link :to="{ name: 'TemperaturMain' }">
+            <router-link :to="{ name: 'SensorDataMain' }">
               <img
                 class="h-30 w-auto mx-auto"
                 src="./../assets/logo.png"
@@ -287,7 +287,7 @@
           py-1.5
         "
       >
-        <router-link :to="{ name: 'TemperaturMain' }">
+        <router-link :to="{ name: 'SensorDataMain' }">
           <img
             class="h-10 w-auto"
             src="./../assets/inspi_food_kopf.png"
