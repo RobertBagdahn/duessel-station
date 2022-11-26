@@ -15,6 +15,10 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed, onMounted } from "vue";
+
+import { useTemperatureStore } from "@/modules/temperature/store/index";
+
 import { TagIcon } from "@heroicons/vue/20/solid";
 
 function onButtonClick(){
@@ -58,5 +62,15 @@ const series = computed(() => {
       categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
     }
   }
+
+  const temperaturStore = useTemperatureStore();
+
+const temperatures = computed(() => {
+  return temperaturStore.temperatures;
+});
+
+  onMounted(() => {
+  temperaturStore.fetchTemperatures();
+});
 
 </script>

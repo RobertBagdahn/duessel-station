@@ -1,0 +1,36 @@
+[
+    {
+        "model": "sensor.pressure",
+        "pk": 10,
+        "fields": {
+          "value": "1028.0",
+          "created": "2022-11-26T10:00:10.000Z"
+        }
+      },
+      {
+        "model": "sensor.pressure",
+        "pk": 11,
+        "fields": {
+          "value": "1023.0",
+          "created": "2022-11-26T10:00:11.000Z"
+        }
+      },
+      {
+        "model": "sensor.pressure",
+        "pk": 12,
+        "fields": {
+          "value": "1019.0",
+          "created": "2022-11-26T10:00:12.000Z"
+        }
+      },
+      {
+        "model": "sensor.pressure",
+        "pk": 13,
+        "fields": {
+          "value": "1021.7",
+          "created": "2022-11-26T10:00:13.000Z"
+        }
+      }
+  
+]
+    

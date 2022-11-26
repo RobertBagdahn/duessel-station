@@ -3,7 +3,7 @@ export default [
     path: "/",
     name: "home",
     redirect: { name: "TemperaturMain" },
-    component: () => import(/* webpackChunkName: "TemperaturMain" */ "@/modules/temperatur/views/Main.vue")
+    component: () => import(/* webpackChunkName: "TemperaturMain" */ "@/modules/temperature/views/Main.vue")
   },
   {
     path: '/404',
