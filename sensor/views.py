@@ -8,6 +8,8 @@ from .serializers import TemperatureSerializer, PressureSerializer
 
 from service.sensor import SensorModule
 
+#temperature
+
 class TemperatureView(viewsets.ModelViewSet):
     queryset = Temperature.objects.all()
     serializer_class = TemperatureSerializer
@@ -23,6 +25,21 @@ class SaveTemperature(viewsets.ModelViewSet):
         SensorClass = SensorModule()
         SensorClass.add_temperature()
         return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
-class PressureView(generics.ListCreateAPIView):
+
+#pressure
+
+class PressureView(viewsets.ModelViewSet):
     queryset = Pressure.objects.all()
     serializer_class = PressureSerializer
+
+
+class SavePressure(viewsets.ModelViewSet):
+
+    queryset = Pressure.objects.all()
+    serializer_class = PressureSerializer
+
+    def create(self, request, *args, **kwargs):
+
+        SensorClass = SensorModule()
+        SensorClass.add_pressure()
+        return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
