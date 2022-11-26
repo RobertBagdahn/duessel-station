@@ -20,6 +20,17 @@ import { ref, computed, onMounted } from "vue";
 import { useTemperatureStore } from "@/modules/temperature/store/index";
 
 import { TagIcon } from "@heroicons/vue/20/solid";
+import { createDOMCompilerError } from "@vue/compiler-dom";
+
+
+
+const temperaturStore = useTemperatureStore();
+
+const temperatures = computed(() => {
+  console.log(temperaturStore.temperatures);
+  return temperaturStore.temperatures;
+});
+
 
 function onButtonClick(){
   console.log("Hallo");
@@ -31,7 +42,7 @@ const multiplyer = ref(1);
 const series = computed(() => {
   return [{
       name: "Desktops",
-      data: [10*multiplyer.value, 41*multiplyer.value, 35, 51, 49, 62, 69, 91, 148]
+      data: temperatures.value.map(a => a.value),
     }]
 })
   const chartOptions = {
@@ -59,15 +70,10 @@ const series = computed(() => {
       },
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      categories: temperatures.value.map(a => a.created),
     }
   }
 
-  const temperaturStore = useTemperatureStore();
-
-const temperatures = computed(() => {
-  return temperaturStore.temperatures;
-});
 
   onMounted(() => {
   temperaturStore.fetchTemperatures();

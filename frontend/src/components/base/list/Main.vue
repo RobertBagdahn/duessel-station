@@ -642,7 +642,7 @@ const props = defineProps({
   name: String,
   items: Array,
   sortOptions: Array,
-  filters: Array,
+  filters: ,
   mainPageLink: String,
   detailPageLink: String,
   buttonList: Array,
