@@ -180,7 +180,7 @@ import {
   ReceiptRefundIcon,
   UsersIcon,
 } from "@heroicons/vue/24/outline";
-
+//PENIS
 import { update, values } from "cypress/types/lodash";
 
 import { useSensorDataStore } from "@/modules/sensorData/store/index";
