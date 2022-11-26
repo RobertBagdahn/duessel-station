@@ -408,11 +408,17 @@ const currentRoute = computed(() => {
 
 const navigation = [
   {
-    name: "Temperatur",
+    name: "Sensor Daten",
     linkName: "TemperaturMain",
     icon: RocketLaunchIcon,
     route: "temperatur",
   },
+  {
+    name: "Led Matrix",
+    linkName: "TemperaturMain",
+    icon: RocketLaunchIcon,
+    route: "temperatur",
+  }
 ];
 </script>
 
