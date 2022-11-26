@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-+foncuiry6_52@!eni4^r&@nl-xm@x288r$h)4xc0x9xey#id)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.109']
 
 
 # Application definition
@@ -131,8 +131,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 
-CORS_ORIGIN_WHITELIST = 'http://localhost:8080', 'http://127.0.0.1:8080', 'http://127.0.0.1:8000', 'http://localhost:8000'
-CSRF_TRUSTED_ORIGINS = 'http://localhost:8080', 'http://127.0.0.1:8080', 'http://127.0.0.1:8000', 'http://localhost:8000'
+CORS_ORIGIN_WHITELIST = 'http://localhost:8080', 'http://127.0.0.1:8080', 'http://127.0.0.1:8000', 'http://localhost:8000', 'http://192.168.0.109'
+CSRF_TRUSTED_ORIGINS = 'http://localhost:8080', 'http://127.0.0.1:8080', 'http://127.0.0.1:8000', 'http://localhost:8000', 'http://192.168.0.109'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = False
 SECURE_SSL_REDIRECT = False
