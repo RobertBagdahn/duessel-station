@@ -137,7 +137,7 @@ function getMassByAge(age: number, genderId: number) {
     }
   } else {
     mass = 60;
-    if (age <= 17) {
+     (age <= 17) {
       mass = 59;
     }
     if (age <= 16) {

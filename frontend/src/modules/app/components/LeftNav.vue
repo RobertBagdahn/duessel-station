@@ -407,12 +407,19 @@ const currentRoute = computed(() => {
 });
 
 const navigation = [
+  
   {
     name: "Temperatur",
     linkName: "TemperaturMain",
     icon: RocketLaunchIcon,
     route: "temperatur",
   },
+  {
+    name: "Sensor Daten",
+    linkName: "SensorDataMain",
+    icon: RocketLaunchIcon,
+    route: "sensorData",
+  }
 ];
 </script>
 

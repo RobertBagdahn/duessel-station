@@ -2,10 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import AppRouter from '@/modules/app/router'
 import TemperaturRouter from '@/modules/temperatur/router'
+import SensorDataRouter from '@/modules/sensorData/router'
 
 const routes = [
   ...AppRouter,
-  ...TemperaturRouter
+  ...TemperaturRouter,
+  ...SensorDataRouter
 ]
 
 const router = createRouter({
