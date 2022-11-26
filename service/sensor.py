@@ -3,7 +3,8 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 from random import *
-from sense_hat import SenseHat
+if env.bool('IS_RASPBERRY'):
+    from sense_hat import SenseHat
 
 from sensor import models as sensor_models
 
