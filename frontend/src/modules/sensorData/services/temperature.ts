@@ -1,9 +1,8 @@
 import axios from "axios";
 const BASE_URL = import.meta.env.VITE_APP_API;
-const SERVICE = 'sensor/pressure'
+const SERVICE = "sensor/temperatur";
 
 export default {
-
   fetchAll(params: any) {
     return axios.get(`${BASE_URL}/${SERVICE}/`, {
       params: params,
@@ -15,7 +14,7 @@ export default {
   },
 
   create(data: any) {
-    return axios.post(`${BASE_URL}/${SERVICE}/`, data );
+    return axios.post(`${BASE_URL}/${SERVICE}/`, data);
   },
 
   update(id: any, data: any) {
@@ -23,9 +22,9 @@ export default {
   },
 
   delete(id: any) {
-    return axios.delete(`${BASE_URL}/${SERVICE}/${id}`)
+    return axios.delete(`${BASE_URL}/${SERVICE}/${id}`);
   },
   clone(id: any) {
-    return axios.post(`${BASE_URL}/${SERVICE}-clone/`, { id })
+    return axios.post(`${BASE_URL}/${SERVICE}-clone/`, { id });
   },
 };
