@@ -1,0 +1,108 @@
+[
+    {
+      "model": "sensor.temperature",
+      "pk": 1,
+      "fields": {
+        "value": "20.0",
+        "created": "2022-11-26T10:00:01.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 2,
+      "fields": {
+        "value": "21.5",
+        "created": "2022-11-26T10:00:02.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 3,
+      "fields": {
+        "value": "20.7",
+        "created": "2022-11-26T10:00:03.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 4,
+      "fields": {
+        "value": "21.3",
+        "created": "2022-11-26T10:00:04.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 5,
+      "fields": {
+        "value": "21.1",
+        "created": "2022-11-26T10:00:05.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 6,
+      "fields": {
+        "value": "20.3",
+        "created": "2022-11-26T10:00:06.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 7,
+      "fields": {
+        "value": "21.3",
+        "created": "2022-11-26T10:00:07.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 8,
+      "fields": {
+        "value": "20.0",
+        "created": "2022-11-26T10:00:08.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 9,
+      "fields": {
+        "value": "17.0",
+        "created": "2022-11-26T10:00:09.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 10,
+      "fields": {
+        "value": "28.0",
+        "created": "2022-11-26T10:00:10.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 11,
+      "fields": {
+        "value": "23.0",
+        "created": "2022-11-26T10:00:11.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 12,
+      "fields": {
+        "value": "19.0",
+        "created": "2022-11-26T10:00:12.000Z"
+      }
+    },
+    {
+      "model": "sensor.temperature",
+      "pk": 13,
+      "fields": {
+        "value": "21.7",
+        "created": "2022-11-26T10:00:13.000Z"
+      }
+    }
+
+  ]
+  
