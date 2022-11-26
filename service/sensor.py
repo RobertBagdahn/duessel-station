@@ -14,7 +14,7 @@ class SensorModule:
         return randint(smallest, largest - 1)
     
     def get_sensor_temperature(self):
-        #  todo for Julius
+        # todo for Julius
         return 1
 
     def add_temperature(self):
