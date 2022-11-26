@@ -39,15 +39,14 @@ class SensorModule:
             sensor_models.Temperature.objects.create(value = temperature)
             print(temperature)
         return True
-    
-    
+
     #pressure
     def get_dummy_pressure(self):
         smallest = 19
         largest = 25
 
         return randint(smallest, largest - 1)
-    
+
     def get_sensor_pressure(self):
         # todo for Julius
         sense = SenseHat()
@@ -59,7 +58,6 @@ class SensorModule:
         return pressure
 
     def add_pressure(self):
-
         is_raspberry = env.bool('IS_RASPBERRY')
         if is_raspberry:
             pressure = self.get_sensor_pressure()

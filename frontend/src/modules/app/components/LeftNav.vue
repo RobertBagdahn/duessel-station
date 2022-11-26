@@ -191,7 +191,7 @@
               <img
                 class="h-30 w-auto mx-auto"
                 src="./../assets/logo.png"
-              alt="Food Inspi"
+                alt="Food Inspi"
               />
             </router-link>
           </div>
@@ -407,21 +407,11 @@ const currentRoute = computed(() => {
 });
 
 const navigation = [
-  
-  {
-    name: "Temperatur",
-    linkName: "TemperaturMain",
-    icon: RocketLaunchIcon,
-    route: "temperatur",
-  },
   {
     name: "Sensor Daten",
     linkName: "SensorDataMain",
     icon: RocketLaunchIcon,
     route: "sensorData",
-  }
+  },
 ];
 </script>
-
-<style>
-</style>
