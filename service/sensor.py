@@ -3,6 +3,8 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 from random import *
+if env.bool('IS_RASPBERRY'):
+    from sense_hat import SenseHat
 
 from sensor import models as sensor_models
 
@@ -14,8 +16,15 @@ class SensorModule:
         return randint(smallest, largest - 1)
     
     def get_sensor_temperature(self):
-        #  todo for Julius
-        return 1
+        # todo for Julius
+        sense = SenseHat()
+        sense.clear()
+
+        temp = sense.get_temperature_from_pressure()
+        temp = round(temp, 1)
+        print(temp)
+
+        return temp
 
     def add_temperature(self):
 
