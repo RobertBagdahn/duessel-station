@@ -28,19 +28,19 @@ export const useTemperatureStore = defineStore("temperature", {
 
 
 
-import PressureApi from "@/modules/temperature/services/temperature";
+import PressureApi from "@/modules/temperature/services/pressure";
 
 
-export const usePressureStore = defineStore("temperature", {
+export const usePressureStore = defineStore("pressure", {
   state: () => ({
-    _temperatures: [],
+    _pressures: [],
   }),
 
   actions: {
-    async fetchTemperatures(params = {}) {
+    async fetchPressures(params = {}) {
       try {
         const response = await PressureApi.fetchAll(params);
-        this._temperatures = response.data;
+        this._pressures = response.data;
       } catch (error) {
         alert(error);
         console.log(error);
@@ -48,27 +48,27 @@ export const usePressureStore = defineStore("temperature", {
     },
   },
   getters: {
-    temperatures: (state) => {
-      return state._temperatures;
+    pressures: (state) => {
+      return state._pressures;
     },
   },
 });
 
 
 
-import HumidityApi from "@/modules/temperature/services/temperature";
+import HumidityApi from "@/modules/temperature/services/humidity";
 
 
-export const useHumidityStore = defineStore("temperature", {
+export const useHumidityStore = defineStore("humidity", {
   state: () => ({
-    _temperatures: [],
+    _humidities: [],
   }),
 
   actions: {
-    async fetchTemperatures(params = {}) {
+    async fetchHumidities(params = {}) {
       try {
         const response = await HumidityApi.fetchAll(params);
-        this._temperatures = response.data;
+        this._humidities = response.data;
       } catch (error) {
         alert(error);
         console.log(error);
@@ -76,8 +76,8 @@ export const useHumidityStore = defineStore("temperature", {
     },
   },
   getters: {
-    temperatures: (state) => {
-      return state._temperatures;
+    humidities: (state) => {
+      return state._humidities;
     },
   },
 });

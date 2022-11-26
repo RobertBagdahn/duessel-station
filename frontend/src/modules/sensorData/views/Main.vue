@@ -166,12 +166,13 @@ function updateChartValues(amount:Number, name:String){
   }
   else if(currentSensorBtnName.value === "Luftfeuchtigkeit"){
     console.log("Luftfeuchtigkeit wird aktualisiert");
-    humidityStore.fetchHumidity();
+    //humidityStore.fetchHumidities();
+    alert("humidity not added yet");
     //add fetch for humidity
   }
   else if(currentSensorBtnName.value === "Luftdruck"){
     console.log("Luftdruck wird aktualisiert");
-    pressureStore.fetchPressure();
+    pressureStore.fetchPressures();
     //add fetch for luftdruck
   }
   console.log(`Amount: ${amount}; Name: ${name}`);
@@ -181,6 +182,7 @@ function updateChartValues(amount:Number, name:String){
 //SHOW THE GRAPH
 let series = computed(() => {
   //ergibt irgendwie sinn
+  console.log(`${currentSensorBtnName.value} is shown on the y axis`);
   return [{
     name: currentSensorBtnName.value,
     data: temperatures.value.map(a => a.value),
