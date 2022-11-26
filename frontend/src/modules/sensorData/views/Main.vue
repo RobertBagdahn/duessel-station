@@ -74,7 +74,12 @@ import {
 
 import { update, values } from "cypress/types/lodash";
 
-import { useTemperatureStore } from "@/modules/temperature/store/index";
+
+import { 
+  useTemperatureStore,
+  usePressureStore,
+  useHumidityStore,
+} from "@/modules/temperature/store/index";
 
 
 const sensorBtns = [
@@ -109,6 +114,20 @@ const temperatures = computed(() => {
   return temperaturStore.temperatures;
 });
 
+const pressureStore = usePressureStore();
+
+const pressures = computed(() => {
+  console.log(pressureStore.temperatures);
+  return pressureStore.temperatures;
+});
+
+const humidityStore = useHumidityStore();
+
+const humidities = computed(() => {
+  console.log(humidityStore.temperatures);
+  return humidityStore.temperatures;
+});
+
 
 onMounted(() => {
   updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
@@ -123,9 +142,18 @@ function onDataSelectButtonClick(sensorBtn:object){
   updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
 }
 
+
 const timeRangeInput = ref(20);
 
+
 function onTimeRangeButtonClick(){
+  if(timeRangeInput.value > 1000){
+    timeRangeInput.value = 1000;
+  }
+  else if(timeRangeInput.value < 3){
+    timeRangeInput.value = 3;
+  }
+
   console.log(`new number: ${timeRangeInput.value}`);
   updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
 }
@@ -138,12 +166,15 @@ function updateChartValues(amount:Number, name:String){
   }
   else if(currentSensorBtnName.value === "Luftfeuchtigkeit"){
     console.log("Luftfeuchtigkeit wird aktualisiert");
+    humidityStore.fetchHumidity();
     //add fetch for humidity
   }
   else if(currentSensorBtnName.value === "Luftdruck"){
     console.log("Luftdruck wird aktualisiert");
+    pressureStore.fetchPressure();
     //add fetch for luftdruck
   }
+  console.log(`Amount: ${amount}; Name: ${name}`);
 }
 
 
