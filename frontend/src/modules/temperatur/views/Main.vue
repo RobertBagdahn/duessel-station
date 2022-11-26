@@ -27,7 +27,7 @@ const multiplyer = ref(1);
 const series = computed(() => {
   return [{
       name: "Desktops",
-      data: [10*multiplyer.value, 41, 35, 51, 49, 62, 69, 91, 148]
+      data: [10*multiplyer.value, 41*multiplyer.value, 35, 51, 49, 62, 69, 91, 148]
     }]
 })
   const chartOptions = {

@@ -38,6 +38,28 @@
     </div>
     </div>
   </div>
+  <div class="relative">
+    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+      <div class="w-full border-t border-gray-300" />
+    </div>
+    <div class="relative flex justify-start">
+      <span class="bg-white pr-3 text-lg font-medium text-gray-900">Projects</span>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <!-- Content goes here -->
+    <div>
+      <h3 class="text-lg font-medium leading-6 text-gray-900">Last 30 days</h3>
+      <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div v-for="item in stats" :key="item.name" class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+          <dt class="truncate text-sm font-medium text-gray-500">{{ item.name }}</dt>
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{ item.stat }}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+    
 </template>
 
 
@@ -47,6 +69,13 @@
 <script setup lang="ts">
 import { TagIcon } from "@heroicons/vue/20/solid";
 
+
+const stats = [
+  { name: 'Total Subscribers', stat: '71,897' },
+  { name: 'Avg. Open Rate', stat: '58.16%' },
+  { name: 'Avg. Click Rate', stat: '24.57%' },
+]
+
 import {
   AcademicCapIcon,
   BanknotesIcon,
@@ -55,7 +84,9 @@ import {
   ReceiptRefundIcon,
   UsersIcon,
 } from '@heroicons/vue/24/outline'
+
 import { values } from "cypress/types/lodash";
+
 
 
 const sensorBtns = [
@@ -87,39 +118,39 @@ const sensorBtns = [
 
 
 //Ist das gemüse richtig definiert?
-const currentSensorData = "";
+let currentSensorDataId = "temp";
 function onButtonClick(id:string){
-  alert(`Gedrückt ${id}`) ;
+  //alert(`Gedrückt ${id}`) ;
 
   //warum kann ich das so nicht setzen? weil es const ist?
-  currentSensorData = id;
+  currentSensorDataId = id;
 }
 
 
 const series = computed(() => {
   //ergibt irgendwie sinn
-  if (currentSensorData === "temp"){
+  if (currentSensorDataId === "temp"){
     return [{
       name: "Temperaturen",
       data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
     }]
   }
 
-  if (currentSensorData === "humid"){
+  if (currentSensorDataId === "humid"){
     return [{
       name: "Luftfeuchtigkeit",
       data: [40, 41, 43, 41, 50, 40, 44, 49, 55, 53]
     }]
   }
-
-  if (currentSensorData === "pres"){
+  
+  if (currentSensorDataId === "pres"){
     return [{
       name: "Luftdruck",
       data: [20, 21, 25, 24, 22, 19, 20, 18, 17, 15, 10]
     }]
   }
-  
 })
+
   const chartOptions = {
     chart: {
       height: 350,
@@ -135,7 +166,7 @@ const series = computed(() => {
       curve: 'straight'
     },
     title: {
-      text: 'Product Trends by Month',
+      text: ('${currentSensorDataId} over Time'),
       align: 'left'
     },
     grid: {
