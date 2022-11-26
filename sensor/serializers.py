@@ -19,7 +19,7 @@ class PressureSerializer(serializers.ModelSerializer):
         model = Pressure
         fields = ('created', 'value', 'height')
     
-    def get_height():
+    def get_height(self, object):
         return 1
 
 
