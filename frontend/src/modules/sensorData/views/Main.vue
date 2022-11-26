@@ -117,15 +117,15 @@ const temperatures = computed(() => {
 const pressureStore = usePressureStore();
 
 const pressures = computed(() => {
-  console.log(pressureStore.temperatures);
-  return pressureStore.temperatures;
+  console.log(pressureStore.pressures);
+  return pressureStore.pressures;
 });
 
 const humidityStore = useHumidityStore();
 
 const humidities = computed(() => {
-  console.log(humidityStore.temperatures);
-  return humidityStore.temperatures;
+  console.log(humidityStore.humidities);
+  return humidityStore.humidities;
 });
 
 
