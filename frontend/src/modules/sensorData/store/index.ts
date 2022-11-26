@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import TemperaturApi from "@//modules/temperatur/services/temperatur.ts";
+import TemperaturApi from "@//modules/temperature/services/temperatur.ts";
 
 
 export const useRecipeStore = defineStore("recipe", {

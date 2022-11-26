@@ -20,7 +20,7 @@ class SaveTemperature(viewsets.ModelViewSet):
     serializer_class = TemperatureSerializer
 
     def create(self, request, *args, **kwargs):
-        
+
         SensorClass = SensorModule()
         SensorClass.add_temperature()
         return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
