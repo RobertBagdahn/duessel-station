@@ -10,7 +10,7 @@
           
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div v-for="sensorBtn in sensorBtns" :key="sensorBtn.name" class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
-              <button @click="onButtonClick(sensorBtn)">
+              <button @click="onDataSelectButtonClick(sensorBtn)">
                 <div class="flex-shrink-0">
                   <span :class="[sensorBtn.iconBackground, sensorBtn.iconForeground, 'rounded-lg inline-flex p-3 ring-4 ring-white']">
                     <component :is="sensorBtn.icon" class="h-6 w-6" aria-hidden="true" />
@@ -35,6 +35,22 @@
             <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart>
           </div>
 
+          <div>
+            <label for="time-range" class="block text-sm font-medium text-gray-700">Zeitdings zurück: </label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+              <div class="relative flex flex-grow items-stretch focus-within:z-10">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <UsersIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                </div>
+                <input type="text" v-model="timeRangeInput" name="time-range" id="time-range" class="block w-full rounded-none rounded-l-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
+              </div>
+              <button @click="onTimeRangeButtonClick()" type="button" class="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                <BarsArrowUpIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+                <span>Update</span>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -56,7 +72,9 @@ import {
   UsersIcon,
 } from '@heroicons/vue/24/outline'
 
-import { values } from "cypress/types/lodash";
+import { update, values } from "cypress/types/lodash";
+
+import { useTemperatureStore } from "@/modules/temperature/store/index";
 
 
 const sensorBtns = [
@@ -84,40 +102,60 @@ const sensorBtns = [
 ]
 
 
+const temperaturStore = useTemperatureStore();
+
+const temperatures = computed(() => {
+  console.log(temperaturStore.temperatures);
+  return temperaturStore.temperatures;
+});
+
+
+onMounted(() => {
+  updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
+});
+
 //FUNCTION FOR BUTTON PUSH
 let currentSensorBtnName = ref("Temperatur");
 
-function onButtonClick(sensorBtn:object){
+function onDataSelectButtonClick(sensorBtn:object){
   currentSensorBtnName.value = sensorBtn?.name;
   console.log(`auf ${currentSensorBtnName.value} gedrückt`);
+  updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
+}
+
+const timeRangeInput = ref(20);
+
+function onTimeRangeButtonClick(){
+  console.log(`new number: ${timeRangeInput.value}`);
+  updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
+}
+
+
+function updateChartValues(amount:Number, name:String){
+  if(currentSensorBtnName.value === "Temperatur"){
+    console.log("Temperatur wird aktualisiert");
+    temperaturStore.fetchTemperatures();
+  }
+  else if(currentSensorBtnName.value === "Luftfeuchtigkeit"){
+    console.log("Luftfeuchtigkeit wird aktualisiert");
+    //add fetch for humidity
+  }
+  else if(currentSensorBtnName.value === "Luftdruck"){
+    console.log("Luftdruck wird aktualisiert");
+    //add fetch for luftdruck
+  }
 }
 
 
 //SHOW THE GRAPH
 let series = computed(() => {
   //ergibt irgendwie sinn
-  if(currentSensorBtnName.value === "Temperatur"){
-    return [{
-      name: "Temperatur",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-    }]
-  }
-  else if(currentSensorBtnName.value === "Luftfeuchtigkeit"){
-    return [{
-      name: "Luftfeuchtigkeit",
-      data: [40, 41, 43, 45, 50, 53, 40, 45, 43]
-    }]
-  }
-  else if(currentSensorBtnName.value === "Luftdruck"){
-    return [{
-      name: "Luftdruck",
-      data: [135, 265, 364, 234, 353, 305, 123]
-    }]
-  }
-  else{
-    alert("Name nicht verfügbar");
-  }
+  return [{
+    name: currentSensorBtnName.value,
+    data: temperatures.value.map(a => a.value),
+  }]
 })
+
 
 let chartOptions = {
   chart: {
@@ -144,7 +182,7 @@ let chartOptions = {
     },
   },
   xaxis: {
-    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    categories: temperatures.value.map(a => a.created),
   }
 }
 
