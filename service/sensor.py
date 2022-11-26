@@ -12,12 +12,17 @@ class SensorModule:
         largest = 25
 
         return randint(smallest, largest - 1)
+    
+    def get_sensor_temperature(self):
+        #  todo for Julius
+        return 1
 
     def add_temperature(self):
 
         is_raspberry = env.bool('IS_RASPBERRY')
         if is_raspberry:
-            print('Ich bin auf dem Raspberry')
+            temperature = self.get_sensor_temperature()
+            sensor_models.Temperature.objects.create(value = temperature)
         else:
             print('Ich bin Lokal')
             temperature = self.get_dummy_temperature()
