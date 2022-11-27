@@ -340,7 +340,7 @@ let humiditySeries = computed(() => {
   ];
 });
 
-let humidityChartOptions = {
+let humidityChartOptions = computed(() {
   chart: {
     height: 350,
     type: "line",
@@ -367,7 +367,7 @@ let humidityChartOptions = {
   xaxis: {
     categories: humidities.value.map((a) => a.created),
   },
-};
+});
 
 let pressureSeries = computed(() => {
   //ergibt irgendwie sinn
