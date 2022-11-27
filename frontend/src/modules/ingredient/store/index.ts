@@ -28,7 +28,7 @@ export const useIngredientStore = defineStore("ingredient", {
         const response = await IngredientApi.fetchAll(params);
         this._ingredients = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -37,7 +37,7 @@ export const useIngredientStore = defineStore("ingredient", {
         const response = await IngredientApi.fetchById(id);
         this._ingredientDetail = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -74,7 +74,7 @@ export const useIngredientStore = defineStore("ingredient", {
         const response = await PortionsApi.fetchAll(params);
         this._portions = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -94,7 +94,7 @@ export const useIngredientStore = defineStore("ingredient", {
         const response = await PackageApi.fetchAll(params);
         this._packages = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -103,7 +103,7 @@ export const useIngredientStore = defineStore("ingredient", {
         const response = await PriceApi.fetchAll(params);
         this._prices = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -134,7 +134,7 @@ export const useIngredientStore = defineStore("ingredient", {
         const response = await RetailerApi.fetchAll(params);
         this._retailers = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -143,7 +143,7 @@ export const useIngredientStore = defineStore("ingredient", {
         const response = await MeasuringUnitApi.fetchAll(params);
         this._measuringUnits = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },

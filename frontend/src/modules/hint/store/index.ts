@@ -15,7 +15,6 @@ export const useHintStore = defineStore("hint", {
         const response = await HintApi.fetchAll(params);
         this._hints = response.data;
       } catch (error) {
-        alert(error);
         console.log(error);
       }
     },
@@ -24,7 +23,6 @@ export const useHintStore = defineStore("hint", {
         const response = await HintApi.fetchById(id);
         this._hint = response.data;
       } catch (error) {
-        alert(error);
         console.log(error);
       }
     },

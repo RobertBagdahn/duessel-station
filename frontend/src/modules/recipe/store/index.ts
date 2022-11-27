@@ -33,7 +33,7 @@ export const useRecipeStore = defineStore("recipe", {
         const response = await RecipeApi.fetchAll(params);
         this._recipes = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -42,7 +42,7 @@ export const useRecipeStore = defineStore("recipe", {
         const response = await RecipeApi.fetchById(id);
         this._recipeDetail = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -79,7 +79,7 @@ export const useRecipeStore = defineStore("recipe", {
         const response = await RecipeItemApi.fetchById(id);
         this._recipeItem = response.data;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },

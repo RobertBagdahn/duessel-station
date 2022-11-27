@@ -17,7 +17,7 @@ export const useSensorDataStore = defineStore("sensorData", {
         const response = await TemperatureApi.fetchAll(params);
         this._temperatures = response.data.results;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -26,7 +26,7 @@ export const useSensorDataStore = defineStore("sensorData", {
         const response = await PressureApi.fetchAll(params);
         this._pressures = response.data.results;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -35,7 +35,7 @@ export const useSensorDataStore = defineStore("sensorData", {
         const response = await HumidityApi.fetchAll(params);
         this._humidities = response.data.results;
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -43,7 +43,7 @@ export const useSensorDataStore = defineStore("sensorData", {
       try {
         return await TemperatureApi.newData();
       } catch (error) {
-        alert(error);
+        
         console.log(error);
       }
     },
@@ -51,7 +51,6 @@ export const useSensorDataStore = defineStore("sensorData", {
       try {
         return await PressureApi.newData();
       } catch (error) {
-        alert(error);
         console.log(error);
       }
     },
@@ -59,7 +58,6 @@ export const useSensorDataStore = defineStore("sensorData", {
       try {
         return await HumidityApi.newData();
       } catch (error) {
-        alert(error);
         console.log(error);
       }
     },
