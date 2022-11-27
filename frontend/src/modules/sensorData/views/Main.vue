@@ -244,9 +244,9 @@ const humidities = computed(() => {
 
 onMounted(() => {
   updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
-  sensorDataStore.fetchTemperatures();
-  sensorDataStore.fetchPressures();
-  sensorDataStore.fetchHumidities();
+  // sensorDataStore.fetchTemperatures();
+  // sensorDataStore.fetchPressures();
+  // sensorDataStore.fetchHumidities();
 });
 
 //FUNCTION FOR BUTTON PUSH
@@ -275,17 +275,15 @@ function onTimeRangeButtonClick() {
 function updateChartValues(amount: Number, name: String) {
   if (currentSensorBtnName.value === "Temperatur") {
     console.log("Temperatur wird aktualisiert");
-    sensorDataStore.fetchTemperatures();
-  } 
-  else if (currentSensorBtnName.value === "Luftfeuchtigkeit") {
+    sensorDataStore.fetchTemperatures({limit: amount});
+  } else if (currentSensorBtnName.value === "Luftfeuchtigkeit") {
     console.log("Luftfeuchtigkeit wird aktualisiert");
-    sensorDataStore.fetchHumidities();
-    //alert("humidities not added yet. JULIUS!");
+    sensorDataStore.fetchHumidities({limit: amount});
     //add fetch for humidity
   } 
   else if (currentSensorBtnName.value === "Luftdruck") {
     console.log("Luftdruck wird aktualisiert");
-    sensorDataStore.fetchPressures();
+    sensorDataStore.fetchPressures({limit: amount});
     //add fetch for luftdruck
   }
   console.log(`Amount: ${amount}; Name: ${name}`);

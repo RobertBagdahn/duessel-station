@@ -11,7 +11,7 @@ from service.sensor import SensorModule
 #temperature
 
 class TemperatureView(viewsets.ModelViewSet):
-    queryset = Temperature.objects.all()
+    queryset = Temperature.objects.all().order_by('-created')
     serializer_class = TemperatureSerializer
 
 
@@ -29,7 +29,7 @@ class SaveTemperature(viewsets.ModelViewSet):
 #pressure
 
 class PressureView(viewsets.ModelViewSet):
-    queryset = Pressure.objects.all()
+    queryset = Pressure.objects.all().order_by('-created')
     serializer_class = PressureSerializer
 
 
