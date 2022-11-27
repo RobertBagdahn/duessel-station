@@ -39,3 +39,12 @@ Run Server
 # deactivate venv
 
 `deactivate`
+
+
+#to add new Sensor:
+1. create serializer
+2. add views
+3. add sensor
+4. add urls
+5. add admin
+6. import modules in all files

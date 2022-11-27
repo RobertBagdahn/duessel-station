@@ -1,10 +1,10 @@
 from rest_framework import generics
-from .models import Temperature, Pressure
+from .models import *
 from rest_framework import mixins, viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
-from .serializers import TemperatureSerializer, PressureSerializer
+from .serializers import *
 
 from service.sensor import SensorModule
 
@@ -43,3 +43,26 @@ class SavePressure(viewsets.ModelViewSet):
         SensorClass = SensorModule()
         SensorClass.add_pressure()
         return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
+    
+    
+    
+#humidity
+
+
+class HumidityView(viewsets.ModelViewSet):
+    queryset = Humidity.objects.all()
+    serializer_class = HumiditySerializer
+
+
+class SaveHumidity(viewsets.ModelViewSet):
+
+    queryset = Humidity.objects.all()
+    serializer_class = HumiditySerializer
+
+    def create(self, request, *args, **kwargs):
+
+        SensorClass = SensorModule()
+        SensorClass.add_humidity()
+        return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
+    
+    

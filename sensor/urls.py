@@ -10,6 +10,10 @@ router.register(r'save-temperature', views.SaveTemperature, basename="temperatur
 router.register(r'pressure', views.PressureView)
 router.register(r'save-pressure', views.SavePressure, basename="pressure")
 
+router.register(r'humidity', views.HumidityView)
+router.register(r'save-humidity', views.SaveHumidity, basename="humidity")
+
+
 
 
 urlpatterns = [
