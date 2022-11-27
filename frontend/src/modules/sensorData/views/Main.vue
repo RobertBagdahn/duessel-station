@@ -71,14 +71,33 @@
           <div class="px-4 py-5 sm:p-6">
             <!-- Content goes here -->
 
-            <div id="chart">
+            <div id="temperature-chart" v-if="currentSensorBtnName == 'Temperatur'">
               <apexchart
                 type="line"
                 height="350"
-                :options="chartOptions"
-                :series="series"
+                :options="temperatureChartOptions"
+                :series="temperatureSeries"
               ></apexchart>
             </div>
+
+            <div id="humidity-chart" v-if="currentSensorBtnName == 'Luftfeuchtigkeit'">
+              <apexchart
+                type="line"
+                height="350"
+                :options="humidityChartOptions"
+                :series="humiditySeries"
+              ></apexchart>
+            </div>
+
+            <div id="pressure-chart" v-if="currentSensorBtnName == 'Luftdruck'">
+              <apexchart
+                type="line"
+                height="350"
+                :options="pressureChartOptions"
+                :series="pressureSeries"
+              ></apexchart>
+            </div>
+
 
             <div>
               <label
@@ -225,9 +244,9 @@ const humidities = computed(() => {
 
 onMounted(() => {
   updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
-  sensorDataStore.fetchTemperatures();
-  sensorDataStore.fetchPressures();
-  sensorDataStore.fetchHumidities();
+  // sensorDataStore.fetchTemperatures();
+  // sensorDataStore.fetchPressures();
+  // sensorDataStore.fetchHumidities();
 });
 
 //FUNCTION FOR BUTTON PUSH
@@ -244,7 +263,8 @@ const timeRangeInput = ref(20);
 function onTimeRangeButtonClick() {
   if (timeRangeInput.value > 1000) {
     timeRangeInput.value = 1000;
-  } else if (timeRangeInput.value < 3) {
+  } 
+  else if (timeRangeInput.value < 3) {
     timeRangeInput.value = 3;
   }
 
@@ -255,21 +275,22 @@ function onTimeRangeButtonClick() {
 function updateChartValues(amount: Number, name: String) {
   if (currentSensorBtnName.value === "Temperatur") {
     console.log("Temperatur wird aktualisiert");
-    sensorDataStore.fetchTemperatures();
+    sensorDataStore.fetchTemperatures({limit: amount});
   } else if (currentSensorBtnName.value === "Luftfeuchtigkeit") {
     console.log("Luftfeuchtigkeit wird aktualisiert");
-    sensorDataStore.fetchHumidity();
+    sensorDataStore.fetchHumidities({limit: amount});
     //add fetch for humidity
-  } else if (currentSensorBtnName.value === "Luftdruck") {
+  } 
+  else if (currentSensorBtnName.value === "Luftdruck") {
     console.log("Luftdruck wird aktualisiert");
-    sensorDataStore.fetchPressure();
+    sensorDataStore.fetchPressures({limit: amount});
     //add fetch for luftdruck
   }
   console.log(`Amount: ${amount}; Name: ${name}`);
 }
 
 //SHOW THE GRAPH
-let series = computed(() => {
+let temperatureSeries = computed(() => {
   //ergibt irgendwie sinn
   return [
     {
@@ -279,7 +300,7 @@ let series = computed(() => {
   ];
 });
 
-let chartOptions = {
+let temperatureChartOptions = {
   chart: {
     height: 350,
     type: "line",
@@ -305,6 +326,85 @@ let chartOptions = {
   },
   xaxis: {
     categories: temperatures.value.map((a) => a.created),
+  },
+};
+
+
+let humiditySeries = computed(() => {
+  //ergibt irgendwie sinn
+  return [
+    {
+      name: currentSensorBtnName.value,
+      data: humidities.value.map((a) => a.value),
+    },
+  ];
+});
+
+let humidityChartOptions = computed(() {
+  chart: {
+    height: 350,
+    type: "line",
+    zoom: {
+      enabled: false,
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  stroke: {
+    curve: "straight",
+  },
+  title: {
+    text: `${currentSensorBtnName.value} über Zeit`,
+    align: "left",
+  },
+  grid: {
+    row: {
+      colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+      opacity: 0.5,
+    },
+  },
+  xaxis: {
+    categories: humidities.value.map((a) => a.created),
+  },
+});
+
+let pressureSeries = computed(() => {
+  //ergibt irgendwie sinn
+  return [
+    {
+      name: currentSensorBtnName.value,
+      data: pressures.value.map((a) => a.value),
+    },
+  ];
+});
+
+let pressureChartOptions = {
+  chart: {
+    height: 350,
+    type: "line",
+    zoom: {
+      enabled: false,
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  stroke: {
+    curve: "straight",
+  },
+  title: {
+    text: `${currentSensorBtnName.value} über Zeit`,
+    align: "left",
+  },
+  grid: {
+    row: {
+      colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+      opacity: 0.5,
+    },
+  },
+  xaxis: {
+    categories: pressures.value.map((a) => a.created),
   },
 };
 </script>
