@@ -1,8 +1,6 @@
 <template>
   <div class="2xl:px-64 xl:px-30">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-      <h1>Sensor daten!</h1>
-
       <div
         class="
           divide-y divide-gray-200
@@ -16,7 +14,7 @@
           <!-- Content goes here -->
           <!-- We use less vertical padding on card headers on desktop than on body sections -->
 
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div
               v-for="sensorBtn in sensorBtns"
               :key="sensorBtn.name"
@@ -58,6 +56,9 @@
                     <span class="absolute inset-0" aria-hidden="true" />
                     <p class="text-xl font-medium text-gray-900">
                       {{ sensorBtn.name }}
+                    </p>
+                    <p class="text-xl font-medium text-gray-900">
+                      {{ sensorDataStore[sensorBtn.dataName][0]?.value }}
                     </p>
                     <p class="truncate text-sm text-gray-500">
                       {{ sensorBtn.description }}
@@ -111,48 +112,8 @@
                 >Zeitdings zurück:
               </label>
               <div class="mt-1 flex rounded-md shadow-sm">
-                <div
-                  class="
-                    relative
-                    flex flex-grow
-                    items-stretch
-                    focus-within:z-10
-                  "
-                >
-                  <div
-                    class="
-                      pointer-events-none
-                      absolute
-                      inset-y-0
-                      left-0
-                      flex
-                      items-center
-                      pl-3
-                    "
-                  >
-                    <UsersIcon
-                      class="h-5 w-5 text-gray-400"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    v-model="timeRangeInput"
-                    name="time-range"
-                    id="time-range"
-                    class="
-                      block
-                      w-full
-                      rounded-none rounded-l-md
-                      border-gray-300
-                      pl-10
-                      focus:border-indigo-500 focus:ring-indigo-500
-                      sm:text-sm
-                    "
-                  />
-                </div>
                 <button
-                  @click="onTimeRangeButtonClick()"
+                  @click="onTimeRangeButtonClick(20)"
                   type="button"
                   class="
                     relative
@@ -169,17 +130,77 @@
                     font-medium
                     text-gray-700
                     hover:bg-gray-100
-                    focus:border-indigo-500
+                    focus:border-blue-500
                     focus:outline-none
                     focus:ring-1
-                    focus:ring-indigo-500
+                    focus:ring-blue-500
                   "
                 >
                   <BarsArrowUpIcon
                     class="h-5 w-5 text-gray-400"
                     aria-hidden="true"
                   />
-                  <span>Update</span>
+                  <span>Last 20</span>
+                </button>
+                <button
+                  @click="onTimeRangeButtonClick(50)"
+                  type="button"
+                  class="
+                    relative
+                    -ml-px
+                    inline-flex
+                    items-center
+                    space-x-2
+                    rounded-r-md
+                    border border-gray-300
+                    bg-gray-50
+                    px-4
+                    py-2
+                    text-sm
+                    font-medium
+                    text-gray-700
+                    hover:bg-gray-100
+                    focus:border-blue-500
+                    focus:outline-none
+                    focus:ring-1
+                    focus:ring-blue-500
+                  "
+                >
+                  <BarsArrowUpIcon
+                    class="h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  <span>Last 50</span>
+                </button>
+                <button
+                  @click="onTimeRangeButtonClick(null)"
+                  type="button"
+                  class="
+                    relative
+                    -ml-px
+                    inline-flex
+                    items-center
+                    space-x-2
+                    rounded-r-md
+                    border border-gray-300
+                    bg-gray-50
+                    px-4
+                    py-2
+                    text-sm
+                    font-medium
+                    text-gray-700
+                    hover:bg-gray-100
+                    focus:border-blue-500
+                    focus:outline-none
+                    focus:ring-1
+                    focus:ring-blue-500
+                  "
+                >
+                  <BarsArrowUpIcon
+                    class="h-5 w-5 text-gray-400"
+                    aria-hidden="true"
+                  />
+                  <span>Alle</span>
                 </button>
               </div>
             </div>
@@ -194,6 +215,7 @@
 
 
 <script setup lang="ts">
+import moment from "moment";
 import { ref, computed, onMounted } from "vue";
 
 import {
@@ -203,6 +225,7 @@ import {
   ClockIcon,
   ReceiptRefundIcon,
   UsersIcon,
+  BarsArrowUpIcon,
 } from "@heroicons/vue/24/outline";
 //PENIS
 import { update, values } from "cypress/types/lodash";
@@ -212,6 +235,7 @@ import { useSensorDataStore } from "@/modules/sensorData/store/index";
 const sensorBtns = [
   {
     name: "Temperatur",
+    dataName: "temperatures",
     description: "Zeigt die Temperaturdaten an",
     icon: AcademicCapIcon,
     iconForeground: "text-teal-700",
@@ -219,6 +243,7 @@ const sensorBtns = [
   },
   {
     name: "Luftfeuchtigkeit",
+    dataName: "humidities",
     description: "Zeigt die Luftfeuchtigkeit an",
     icon: UsersIcon,
     iconForeground: "text-teal-700",
@@ -226,6 +251,7 @@ const sensorBtns = [
   },
   {
     name: "Luftdruck",
+    dataName: "pressures",
     description: "Zeigt den Luftdruck an",
     icon: ClockIcon,
     iconForeground: "text-teal-700",
@@ -271,14 +297,8 @@ function onDataSelectButtonClick(sensorBtn: object) {
 
 const timeRangeInput = ref(20);
 
-function onTimeRangeButtonClick() {
-  if (timeRangeInput.value > 1000) {
-    timeRangeInput.value = 1000;
-  } else if (timeRangeInput.value < 3) {
-    timeRangeInput.value = 3;
-  }
-
-  console.log(`new number: ${timeRangeInput.value}`);
+function onTimeRangeButtonClick(limit) {
+  timeRangeInput.value = limit
   updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
 }
 
@@ -288,18 +308,9 @@ function updateChartValues(amount: Number, name: String) {
     sensorDataStore.newPressure(),
     sensorDataStore.newHumidity(),
   ]).then((values) => {
-    if (currentSensorBtnName.value === "Temperatur") {
-      console.log("Temperatur wird aktualisiert");
-      sensorDataStore.fetchTemperatures({ limit: amount });
-    } else if (currentSensorBtnName.value === "Luftfeuchtigkeit") {
-      console.log("Luftfeuchtigkeit wird aktualisiert");
-      sensorDataStore.fetchHumidities({ limit: amount });
-      //add fetch for humidity
-    } else if (currentSensorBtnName.value === "Luftdruck") {
-      console.log("Luftdruck wird aktualisiert");
-      sensorDataStore.fetchPressures({ limit: amount });
-      //add fetch for luftdruck
-    }
+    sensorDataStore.fetchTemperatures({ limit: amount });
+    sensorDataStore.fetchHumidities({ limit: amount });
+    sensorDataStore.fetchPressures({ limit: amount });
   });
   console.log(`Amount: ${amount}; Name: ${name}`);
 }
@@ -310,7 +321,7 @@ let temperatureSeries = computed(() => {
   return [
     {
       name: currentSensorBtnName.value,
-      data: temperatures.value.map((a) => a.value),
+      data: temperatures.value.map((a) => a.value).reverse(),
     },
   ];
 });
@@ -341,7 +352,7 @@ let temperatureChartOptions = computed(() => {
       },
     },
     xaxis: {
-      categories: temperatures.value.map((a) => a.created),
+      categories: temperatures.value.map((a) => moment(a.created).format('LT')).reverse(),
     },
   };
 });
@@ -351,7 +362,7 @@ let humiditySeries = computed(() => {
   return [
     {
       name: currentSensorBtnName.value,
-      data: humidities.value.map((a) => a.value),
+      data: humidities.value.map((a) => a.value).reverse(),
     },
   ];
 });
@@ -382,7 +393,7 @@ let humidityChartOptions = computed(() => {
       },
     },
     xaxis: {
-      categories: humidities.value.map((a) => a.created),
+      categories: humidities.value.map((a) => moment(a.created).format('LT')).reverse(),
     },
   };
 });
@@ -392,7 +403,7 @@ let pressureSeries = computed(() => {
   return [
     {
       name: currentSensorBtnName.value,
-      data: pressures.value.map((a) => a.value),
+      data: pressures.value.map((a) => a.value).reverse(),
     },
   ];
 });
@@ -423,7 +434,7 @@ let pressureChartOptions = computed(() => {
       },
     },
     xaxis: {
-      categories: pressures.value.map((a) => a.created),
+      categories: pressures.value.map((a) => moment(a.created).format('LT')).reverse(),
     },
   };
 });
