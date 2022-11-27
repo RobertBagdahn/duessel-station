@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-import TemperaturApi from "@//modules/sensorData/services/temperatur";
+import TemperatureApi from "@//modules/sensorData/services/temperature";
 import PressureApi from "@/modules/sensorData/services/pressure";
 import HumidityApi from "@/modules/sensorData/services/humidity";
 
@@ -14,7 +14,7 @@ export const useSensorDataStore = defineStore("sensorData", {
   actions: {
     async fetchTemperatures(params = {}) {
       try {
-        const response = await TemperaturApi.fetchAll(params);
+        const response = await TemperatureApi.fetchAll(params);
         this._temperatures = response.data.results;
       } catch (error) {
         alert(error);

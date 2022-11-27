@@ -262,7 +262,7 @@ function updateChartValues(amount: Number, name: String) {
     //add fetch for humidity
   } else if (currentSensorBtnName.value === "Luftdruck") {
     console.log("Luftdruck wird aktualisiert");
-    sensorDataStore.fetchPressure();
+    sensorDataStore.fetchPressures();
     //add fetch for luftdruck
   }
   console.log(`Amount: ${amount}; Name: ${name}`);
