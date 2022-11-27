@@ -8,7 +8,7 @@ export default {
       params: params,
     });
   },
- 
+
   fetchById(id: any) {
     return axios.get(`${BASE_URL}/${SERVICE}/${id}/`);
   },
@@ -26,5 +26,8 @@ export default {
   },
   clone(id: any) {
     return axios.post(`${BASE_URL}/${SERVICE}-clone/`, { id });
+  },
+  newData() {
+    return axios.post(`${BASE_URL}/sensor/save-humidity/`);
   },
 };

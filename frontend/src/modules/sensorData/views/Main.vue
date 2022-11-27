@@ -71,7 +71,10 @@
           <div class="px-4 py-5 sm:p-6">
             <!-- Content goes here -->
 
-            <div id="temperature-chart" v-if="currentSensorBtnName == 'Temperatur'">
+            <div
+              id="temperature-chart"
+              v-if="currentSensorBtnName == 'Temperatur'"
+            >
               <apexchart
                 type="line"
                 height="350"
@@ -80,7 +83,10 @@
               ></apexchart>
             </div>
 
-            <div id="humidity-chart" v-if="currentSensorBtnName == 'Luftfeuchtigkeit'">
+            <div
+              id="humidity-chart"
+              v-if="currentSensorBtnName == 'Luftfeuchtigkeit'"
+            >
               <apexchart
                 type="line"
                 height="350"
@@ -97,7 +103,6 @@
                 :series="pressureSeries"
               ></apexchart>
             </div>
-
 
             <div>
               <label
@@ -244,10 +249,16 @@ const humidities = computed(() => {
 
 onMounted(() => {
   updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
-  // sensorDataStore.fetchTemperatures();
-  // sensorDataStore.fetchPressures();
-  // sensorDataStore.fetchHumidities();
+  startTimer();
 });
+
+let timer;
+
+function startTimer() {
+  timer = setInterval(function () {
+    updateChartValues(timeRangeInput.value, currentSensorBtnName.value);
+  }, 10000);
+}
 
 //FUNCTION FOR BUTTON PUSH
 let currentSensorBtnName = ref("Temperatur");
@@ -263,8 +274,7 @@ const timeRangeInput = ref(20);
 function onTimeRangeButtonClick() {
   if (timeRangeInput.value > 1000) {
     timeRangeInput.value = 1000;
-  } 
-  else if (timeRangeInput.value < 3) {
+  } else if (timeRangeInput.value < 3) {
     timeRangeInput.value = 3;
   }
 
@@ -273,19 +283,24 @@ function onTimeRangeButtonClick() {
 }
 
 function updateChartValues(amount: Number, name: String) {
-  if (currentSensorBtnName.value === "Temperatur") {
-    console.log("Temperatur wird aktualisiert");
-    sensorDataStore.fetchTemperatures({limit: amount});
-  } else if (currentSensorBtnName.value === "Luftfeuchtigkeit") {
-    console.log("Luftfeuchtigkeit wird aktualisiert");
-    sensorDataStore.fetchHumidities({limit: amount});
-    //add fetch for humidity
-  } 
-  else if (currentSensorBtnName.value === "Luftdruck") {
-    console.log("Luftdruck wird aktualisiert");
-    sensorDataStore.fetchPressures({limit: amount});
-    //add fetch for luftdruck
-  }
+  Promise.all([
+    sensorDataStore.newTemperature(),
+    sensorDataStore.newPressure(),
+    sensorDataStore.newHumidity(),
+  ]).then((values) => {
+    if (currentSensorBtnName.value === "Temperatur") {
+      console.log("Temperatur wird aktualisiert");
+      sensorDataStore.fetchTemperatures({ limit: amount });
+    } else if (currentSensorBtnName.value === "Luftfeuchtigkeit") {
+      console.log("Luftfeuchtigkeit wird aktualisiert");
+      sensorDataStore.fetchHumidities({ limit: amount });
+      //add fetch for humidity
+    } else if (currentSensorBtnName.value === "Luftdruck") {
+      console.log("Luftdruck wird aktualisiert");
+      sensorDataStore.fetchPressures({ limit: amount });
+      //add fetch for luftdruck
+    }
+  });
   console.log(`Amount: ${amount}; Name: ${name}`);
 }
 
@@ -300,35 +315,36 @@ let temperatureSeries = computed(() => {
   ];
 });
 
-let temperatureChartOptions = {
-  chart: {
-    height: 350,
-    type: "line",
-    zoom: {
+let temperatureChartOptions = computed(() => {
+  return {
+    chart: {
+      height: 350,
+      type: "line",
+      zoom: {
+        enabled: false,
+      },
+    },
+    dataLabels: {
       enabled: false,
     },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: "straight",
-  },
-  title: {
-    text: `${currentSensorBtnName.value} über Zeit`,
-    align: "left",
-  },
-  grid: {
-    row: {
-      colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-      opacity: 0.5,
+    stroke: {
+      curve: "straight",
     },
-  },
-  xaxis: {
-    categories: temperatures.value.map((a) => a.created),
-  },
-};
-
+    title: {
+      text: `${currentSensorBtnName.value} über Zeit`,
+      align: "left",
+    },
+    grid: {
+      row: {
+        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+        opacity: 0.5,
+      },
+    },
+    xaxis: {
+      categories: temperatures.value.map((a) => a.created),
+    },
+  };
+});
 
 let humiditySeries = computed(() => {
   //ergibt irgendwie sinn
@@ -340,33 +356,35 @@ let humiditySeries = computed(() => {
   ];
 });
 
-let humidityChartOptions = computed(() {
-  chart: {
-    height: 350,
-    type: "line",
-    zoom: {
+let humidityChartOptions = computed(() => {
+  return {
+    chart: {
+      height: 350,
+      type: "line",
+      zoom: {
+        enabled: false,
+      },
+    },
+    dataLabels: {
       enabled: false,
     },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: "straight",
-  },
-  title: {
-    text: `${currentSensorBtnName.value} über Zeit`,
-    align: "left",
-  },
-  grid: {
-    row: {
-      colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-      opacity: 0.5,
+    stroke: {
+      curve: "straight",
     },
-  },
-  xaxis: {
-    categories: humidities.value.map((a) => a.created),
-  },
+    title: {
+      text: `${currentSensorBtnName.value} über Zeit`,
+      align: "left",
+    },
+    grid: {
+      row: {
+        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+        opacity: 0.5,
+      },
+    },
+    xaxis: {
+      categories: humidities.value.map((a) => a.created),
+    },
+  };
 });
 
 let pressureSeries = computed(() => {
@@ -379,32 +397,34 @@ let pressureSeries = computed(() => {
   ];
 });
 
-let pressureChartOptions = {
-  chart: {
-    height: 350,
-    type: "line",
-    zoom: {
+let pressureChartOptions = computed(() => {
+  return {
+    chart: {
+      height: 350,
+      type: "line",
+      zoom: {
+        enabled: false,
+      },
+    },
+    dataLabels: {
       enabled: false,
     },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: "straight",
-  },
-  title: {
-    text: `${currentSensorBtnName.value} über Zeit`,
-    align: "left",
-  },
-  grid: {
-    row: {
-      colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-      opacity: 0.5,
+    stroke: {
+      curve: "straight",
     },
-  },
-  xaxis: {
-    categories: pressures.value.map((a) => a.created),
-  },
-};
+    title: {
+      text: `${currentSensorBtnName.value} über Zeit`,
+      align: "left",
+    },
+    grid: {
+      row: {
+        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+        opacity: 0.5,
+      },
+    },
+    xaxis: {
+      categories: pressures.value.map((a) => a.created),
+    },
+  };
+});
 </script>

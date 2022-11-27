@@ -39,6 +39,30 @@ export const useSensorDataStore = defineStore("sensorData", {
         console.log(error);
       }
     },
+    async newTemperature() {
+      try {
+        return await TemperatureApi.newData();
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+    async newPressure() {
+      try {
+        return await PressureApi.newData();
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
+    async newHumidity() {
+      try {
+        return await HumidityApi.newData();
+      } catch (error) {
+        alert(error);
+        console.log(error);
+      }
+    },
   },
   getters: {
     temperatures: (state) => {

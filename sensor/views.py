@@ -8,7 +8,8 @@ from .serializers import *
 
 from service.sensor import SensorModule
 
-#temperature
+# temperature
+
 
 class TemperatureView(viewsets.ModelViewSet):
     queryset = Temperature.objects.all().order_by('-created')
@@ -26,7 +27,8 @@ class SaveTemperature(viewsets.ModelViewSet):
         SensorClass.add_temperature()
         return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
 
-#pressure
+# pressure
+
 
 class PressureView(viewsets.ModelViewSet):
     queryset = Pressure.objects.all().order_by('-created')
@@ -43,14 +45,10 @@ class SavePressure(viewsets.ModelViewSet):
         SensorClass = SensorModule()
         SensorClass.add_pressure()
         return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
-    
-    
-    
-#humidity
 
 
 class HumidityView(viewsets.ModelViewSet):
-    queryset = Humidity.objects.all()
+    queryset = Humidity.objects.all().order_by('-created')
     serializer_class = HumiditySerializer
 
 
@@ -64,5 +62,3 @@ class SaveHumidity(viewsets.ModelViewSet):
         SensorClass = SensorModule()
         SensorClass.add_humidity()
         return Response('Daten wurden geschrieben', status=status.HTTP_200_OK)
-    
-    
