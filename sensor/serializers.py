@@ -36,8 +36,7 @@ class PressureSerializer(serializers.ModelSerializer):
         field_name = 'value'
         field_object = Pressure._meta.get_field(field_name)
         value = field_object.value_from_object(obj)
-
-        value2 = (145366.45*(1.0-((value-16)/1013.25)))**0.190284
+        value2 = 145366.45*(1.0-(abs(value/1013.25))**(1.0/5.255))
         return value2
 
 

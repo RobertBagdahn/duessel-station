@@ -52,18 +52,20 @@ class SensorModule:
         largest = 25
 
         return randint(smallest, largest - 1)
-
+    
     def get_sensor_temperature(self):
         # todo for Julius
         sense = SenseHat()
         sense.clear()
         
         temperature = 0
+        j=0
         for i in range(10):
             temperature = temperature + sense.get_temperature_from_pressure()
             time.sleep(0.01)
+            j= j+1
 
-        temperature = round(temperature/10, 1)
+        temperature = round(temperature/j, 1)
         
         print(temperature)
 
@@ -76,7 +78,7 @@ class SensorModule:
             temperature = 0
             for i in range(10):
                 temperature = temperature + self.get_sensor_temperature()
-                time.sleep(0.01)
+                time.sleep(0.05)
 
             temperature = temperature/10
             temperature = round(temperature, 1)
@@ -101,13 +103,19 @@ class SensorModule:
         sense.clear()
        
         pressure = 0
+        j = 0
+    
         for i in range(10):
-            pressure = pressure + sense.get_pressure()
+            pressure_moment = sense.get_pressure()
+            if pressure_moment>0:
+                j = j+1
+            pressure = pressure + pressure_moment
             time.sleep(0.01)
+            
 
-        pressure = round(pressure/10, 1)
+        pressure = round(pressure/j, 3)
         print(pressure)
-        return pressure
+        return pressure-6.0
 
     def add_pressure(self):
         is_raspberry = env.bool('IS_RASPBERRY')
@@ -134,12 +142,14 @@ class SensorModule:
         sense = SenseHat()
         sense.clear()
 
-        pressure = 0
+        humidity = 0
+        j = 0
         for i in range(10):
-            humidity = pressure + sense.get_humidity()
-            time.sleep(0.01)
+            humidity = humidity + sense.get_humidity()
+            time.sleep(0.05)
+            j = j+1
 
-        humidity = round(humidity/10, 1)
+        humidity = round(humidity/j, 1)
  
 
         if humidity > 100:
