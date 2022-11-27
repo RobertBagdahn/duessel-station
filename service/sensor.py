@@ -57,9 +57,14 @@ class SensorModule:
         # todo for Julius
         sense = SenseHat()
         sense.clear()
+        
+        temperature = 0
+        for i in range(10):
+            temperature = temperature + sense.get_temperature_from_pressure()
+            time.sleep(0.01)
 
-        temperature = sense.get_temperature_from_pressure()
-        temperature = round(temperature, 1)
+        temperature = round(temperature/10, 1)
+        
         print(temperature)
 
         return temperature
@@ -94,10 +99,14 @@ class SensorModule:
     def get_sensor_pressure(self):
         sense = SenseHat()
         sense.clear()
-        pressure = sense.get_pressure()
-        pressure = round(pressure, 1)
-        print(pressure)
+       
+        pressure = 0
+        for i in range(10):
+            pressure = pressure + sense.get_pressure()
+            time.sleep(0.01)
 
+        pressure = round(pressure/10, 1)
+        print(pressure)
         return pressure
 
     def add_pressure(self):
@@ -124,13 +133,19 @@ class SensorModule:
         # todo for Julius
         sense = SenseHat()
         sense.clear()
-        humidity = sense.get_humidity()
-        humidity = round(humidity, 1)
-        print(humidity)
+
+        pressure = 0
+        for i in range(10):
+            humidity = pressure + sense.get_humidity()
+            time.sleep(0.01)
+
+        humidity = round(humidity/10, 1)
+ 
 
         if humidity > 100:
             humidity = 100.0
-
+            
+        print(humidity)
         return humidity
 
     def add_humidity(self):
