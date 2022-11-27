@@ -44,7 +44,7 @@ export const useSensorDataStore = defineStore("sensorData", {
     temperatures: (state) => {
       return state._temperatures;
     },
-    pressure: (state) => {
+    pressures: (state) => {
       return state._pressures;
     },
     humidities: (state) => {
