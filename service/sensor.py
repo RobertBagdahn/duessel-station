@@ -1,5 +1,4 @@
 import environ
-import time
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env()
@@ -57,9 +56,14 @@ class SensorModule:
         # todo for Julius
         sense = SenseHat()
         sense.clear()
+        
+        temperature = 0
+        for i in range(10):
+            temperature = temperature + sense.get_temperature_from_pressure()
+            time.sleep(0.01)
 
-        temperature = sense.get_temperature_from_pressure()
-        temperature = round(temperature, 1)
+        temperature = round(temperature/10, 1)
+        
         print(temperature)
 
         return temperature
@@ -68,15 +72,8 @@ class SensorModule:
 
         is_raspberry = env.bool('IS_RASPBERRY')
         if is_raspberry:
-            temperature = 0
-            for i in range(10):
-                temperature = temperature + self.get_sensor_temperature()
-                time.sleep(0.01)
-
-            temperature = temperature/10
-            temperature = round(temperature, 1)
+            temperature = self.get_sensor_temperature()
             sensor_models.Temperature.objects.create(value = temperature)
-            
         else:
             print('Ich bin Lokal')
             temperature = self.get_dummy_temperature()
